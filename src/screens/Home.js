@@ -10,6 +10,7 @@ import React, { useState, useEffect } from "react";
 import { COLOURS, Items } from "../components/Database";
 import Entypo from "react-native-vector-icons/Entypo";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 const Home = ({ navigation }) => {
   const [products, setproducts] = useState([]);
@@ -42,6 +43,9 @@ const Home = ({ navigation }) => {
   const ProductCard = ({ data }) => {
     return (
       <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("ProductInfo", { productID: data.id })
+        }
         style={{
           width: "48%",
           marginVertical: 14,
@@ -51,7 +55,7 @@ const Home = ({ navigation }) => {
           style={{
             width: "100%",
             height: 100,
-            borderRadius: 100,
+            borderRadius: 10,
             backgroundColor: COLOURS.backgroundLight,
             position: "relative",
             justifyContent: "center",
@@ -74,7 +78,16 @@ const Home = ({ navigation }) => {
                 justifyContent: "center",
               }}
             >
-              <Text>{data.offPercentage}</Text>
+              <Text
+                style={{
+                  fontSize: 12,
+                  color: COLOURS.white,
+                  fontWeight: "bold",
+                  letterSpacing: 1,
+                }}
+              >
+                {data.offPercentage}%
+              </Text>
             </View>
           ) : null}
           <Image
@@ -86,6 +99,68 @@ const Home = ({ navigation }) => {
             }}
           />
         </View>
+        <Text
+          style={{
+            fontSize: 12,
+            color: COLOURS.black,
+            fontWeight: "600",
+            marginBottom: 2,
+          }}
+        >
+          {data.productName}
+        </Text>
+        {data.category == "accessory" ? (
+          data.isAvailable ? (
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <FontAwesome
+                name="circle"
+                style={{
+                  fontSize: 12,
+                  marginRight: 6,
+                  color: COLOURS.green,
+                }}
+              />
+              <Text
+                style={{
+                  fontSize: 12,
+                  color: COLOURS.green,
+                }}
+              >
+                Available
+              </Text>
+            </View>
+          ) : (
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <FontAwesome
+                name="circle"
+                style={{
+                  fontSize: 12,
+                  marginRight: 6,
+                  color: COLOURS.red,
+                }}
+              />
+              <Text
+                style={{
+                  fontSize: 12,
+                  color: COLOURS.red,
+                }}
+              >
+                Unvailable
+              </Text>
+            </View>
+          )
+        ) : null}
+        <Text>&#8377; {data.productPrice}</Text>
       </TouchableOpacity>
     );
   };
@@ -113,7 +188,7 @@ const Home = ({ navigation }) => {
               name="shopping-bag"
               style={{
                 fontSize: 18,
-                colors: COLOURS.backgroundMedium,
+                color: COLOURS.backgroundMedium,
                 padding: 12,
                 borderRadius: 10,
                 backgroundColor: COLOURS.backgroundLight,
@@ -125,7 +200,7 @@ const Home = ({ navigation }) => {
               name="cart"
               style={{
                 fontSize: 18,
-                colors: COLOURS.backgroundMedium,
+                color: COLOURS.backgroundMedium,
                 padding: 12,
                 borderRadius: 10,
                 borderWidth: 1,
@@ -167,48 +242,117 @@ const Home = ({ navigation }) => {
         <View
           style={{
             padding: 16,
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
           }}
         >
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Text
-              style={{
-                fontSize: 18,
-                color: COLOURS.black,
-                fontWeight: "500",
-                letterSpacing: 1,
-              }}
-            >
-              Products
-            </Text>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Text
+                style={{
+                  fontSize: 18,
+                  color: COLOURS.black,
+                  fontWeight: "500",
+                  letterSpacing: 1,
+                }}
+              >
+                Products
+              </Text>
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: COLOURS.black,
+                  fontWeight: "400",
+                  letterSpacing: 0.5,
+                  marginLeft: 10,
+                }}
+              >
+                41
+              </Text>
+            </View>
             <Text
               style={{
                 fontSize: 14,
-                color: COLOURS.black,
+                color: COLOURS.blue,
                 fontWeight: "400",
-                letterSpacing: 0.5,
-                marginLeft: 10,
               }}
             >
-              41
+              See All
             </Text>
           </View>
-          <Text
+          <View
             style={{
-              fontSize: 14,
-              color: COLOURS.blue,
-              fontWeight: "400",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "space-around",
             }}
           >
-            See All
-          </Text>
+            {products.map((data) => {
+              return <ProductCard data={data} id={data.id} />;
+            })}
+          </View>
         </View>
-        <View>
-          {products.map((data) => {
-            return <ProductCard data={data} id={data.id} />;
-          })}
+
+        <View
+          style={{
+            padding: 16,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Text
+                style={{
+                  fontSize: 18,
+                  color: COLOURS.black,
+                  fontWeight: "500",
+                  letterSpacing: 1,
+                }}
+              >
+                Accessories
+              </Text>
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: COLOURS.black,
+                  fontWeight: "400",
+                  letterSpacing: 0.5,
+                  marginLeft: 10,
+                }}
+              >
+                78
+              </Text>
+            </View>
+            <Text
+              style={{
+                fontSize: 14,
+                color: COLOURS.blue,
+                fontWeight: "400",
+              }}
+            >
+              See All
+            </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "space-around",
+            }}
+          >
+            {accessory.map((data) => {
+              return <ProductCard data={data} id={data.id} />;
+            })}
+          </View>
         </View>
       </ScrollView>
     </View>
