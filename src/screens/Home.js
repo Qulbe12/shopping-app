@@ -35,8 +35,6 @@ const Home = ({ navigation }) => {
 
       setproducts(productList);
       setaccessory(accessoryList);
-
-      console.log(products);
     });
   };
 
@@ -185,7 +183,7 @@ const Home = ({ navigation }) => {
         >
           <TouchableOpacity>
             <Entypo
-              name="shopping-bag"
+              name="chevron-left"
               style={{
                 fontSize: 18,
                 color: COLOURS.backgroundMedium,
@@ -195,7 +193,7 @@ const Home = ({ navigation }) => {
               }}
             />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("MyCart")}>
             <MaterialCommunityIcons
               name="cart"
               style={{
@@ -291,8 +289,8 @@ const Home = ({ navigation }) => {
               justifyContent: "space-around",
             }}
           >
-            {products.map((data) => {
-              return <ProductCard data={data} id={data.id} />;
+            {products.map((data, i) => {
+              return <ProductCard data={data} id={i} key={i} />;
             })}
           </View>
         </View>
@@ -349,8 +347,8 @@ const Home = ({ navigation }) => {
               justifyContent: "space-around",
             }}
           >
-            {accessory.map((data) => {
-              return <ProductCard data={data} id={data.id} />;
+            {accessory.map((data, i) => {
+              return <ProductCard data={data} id={i} key={i} />;
             })}
           </View>
         </View>
