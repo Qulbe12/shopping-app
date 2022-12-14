@@ -193,7 +193,7 @@ const Home = ({ navigation }) => {
               }}
             />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("MyCart")}>
+          <TouchableOpacity onPress={() => navigation.navigate("Form")}>
             <MaterialCommunityIcons
               name="cart"
               style={{
